@@ -41,14 +41,14 @@ public class homework {
         /*System.out.println("习题3：");
         homework3();*/
 
-        /*System.out.println("习题4：");
-        homework4();*/
+        System.out.println("习题4：");
+        homework4();
 
         /*System.out.println("习题5：");
         homework5();*/
 
-        System.out.println("习题6：");
-        homework6();
+        /*System.out.println("习题6：");
+        homework6();*/
 
     }
 
@@ -134,23 +134,17 @@ public class homework {
     public static void homework4() {
         Scanner sc = new Scanner(System.in);
         List<Character> list = new ArrayList<>();
-        List<Character> list1 = new ArrayList<>();
 
         System.out.print("请输入：");
         char[] arr = sc.nextLine().toCharArray(); // String 转 char 数组
 
-        // char 数组给 list
         for (char temp : arr)
-            list.add(temp);
-
-        // 去重
-        for (char c : list)
-            if (Collections.frequency(list1, c) < 1) // 获取所指定元素集合等于指定对象中的数量
-                list1.add(c); // 如果没有就加进去
+            if (Collections.frequency(list, temp) < 1) // 获取所指定元素集合等于指定对象中的数量
+                list.add(temp); // 如果没有就加进去
 
         // 打印
-        for (Character aList1 : list1)
-            System.out.print(aList1);
+        for (Character aList : list)
+            System.out.print(aList);
     }
 
     public static void homework3() {
