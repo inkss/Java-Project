@@ -1,6 +1,5 @@
 
 import com.inkss.day02.Student;
-import com.inkss.day02.Teacher;
 
 import java.util.Scanner;
 
@@ -12,7 +11,6 @@ public class main {
         //test1();
         //test2();
         //test3();
-
     }
 
 
