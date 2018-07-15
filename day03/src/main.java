@@ -7,13 +7,11 @@ public class main {
         //test2();
         //test3();
         //test4();
-        //test5();
+        test5();
         //test6();
         //test7();
         //test8();
         //test9();
-
-
     }
 
     /**
@@ -93,7 +91,7 @@ public class main {
         HashMap<Integer, String> map = new HashMap<>();
         map.put(1, "张三");
         map.put(2, "李四");
-        map.put(3, "王二");
+        map.put(1, "王二"); // 根据 key 覆盖 value
         map.put(4, "麻子");
         map.put(5, "哈哈");
 
@@ -246,19 +244,22 @@ public class main {
      */
     private static void test1() {
         // 定义一个集合
-        Collection collection = new ArrayList(), c1 = new ArrayList(), c2 = new ArrayList();
+        Collection collection = new ArrayList();
+
         if (collection.isEmpty())
             System.out.println("集合当前为空");
 
         collection.add("张三");
         collection.add(12);
-        collection.add("sss");
         System.out.println(collection);
 
         collection.remove(12);
         System.out.println(collection);
 
         System.out.println("集合大小：" + collection.size());
+
+        Collection c1 = new ArrayList();
+        Collection c2 = new ArrayList();
 
         c1.add(collection);
         System.out.println(c1);

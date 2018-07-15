@@ -80,11 +80,7 @@ public class test2 {
         int id = sc.nextInt();
         if (checkAgain(id)) {
             People temp = intPut(id);
-            People people = hashMap.get(id);
-            people.setJob(temp.getJob());
-            people.setName(temp.getName());
-            people.setHoliday(temp.getHoliday());
-            people.setSalary(temp.getSalary());
+            hashMap.put(id, temp);
             System.out.println("修改成功");
         } else {
             System.out.println("查无此人");
@@ -113,6 +109,11 @@ public class test2 {
         }
     }
 
+    /**
+     * 输入函数
+     * @param id 对象的 ID 值
+     * @return 赋值后的 People 对象
+     */
     private static People intPut(int id) {
         System.out.print("请输入员工姓名：");
         String name = sc.next();
@@ -143,6 +144,11 @@ public class test2 {
         return people;
     }
 
+    /**
+     * 根据 num 对 HasMap 查重
+     * @param num key 值
+     * @return 是否存在
+     */
     private static boolean checkAgain(int num) {
         Iterator iterator = hashMap.keySet().iterator();
         while (iterator.hasNext()) {
