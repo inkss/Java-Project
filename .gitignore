@@ -1,0 +1,5 @@
+# 配置文件
+.idea/workspace.xml
+
+# 输出目录
+/production/

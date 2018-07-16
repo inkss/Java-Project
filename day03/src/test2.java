@@ -102,9 +102,7 @@ public class test2 {
     private static void fun5() {
         System.out.println("---查询所有---");
         Set<Integer> set = hashMap.keySet();
-        Iterator<Integer> iterator = set.iterator();
-        while (iterator.hasNext()) {
-            Integer key = iterator.next();
+        for (Integer key : set) {
             System.out.println(hashMap.get(key));
         }
     }
@@ -150,10 +148,8 @@ public class test2 {
      * @return 是否存在
      */
     private static boolean checkAgain(int num) {
-        Iterator iterator = hashMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            int key = (int) iterator.next();
-            if (key == num)
+        for (Object o : hashMap.keySet()) {
+            if ((int) o == num)
                 return true;
         }
         return false;
