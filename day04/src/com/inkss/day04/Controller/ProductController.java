@@ -1,9 +1,10 @@
-package com.inkss.day04;
+package com.inkss.day04.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("pd")
 public class ProductController  {
 
     /**
