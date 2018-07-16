@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 摘自博客园
+ */
 public class ListTest01 {
 
     public static void main(String[] args) {

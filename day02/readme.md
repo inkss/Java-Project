@@ -25,7 +25,9 @@
 
 ### 3.1 Java 中对List集合的常用操作
 
-此部分源引自[博客园](https://www.cnblogs.com/epeter/p/5648026.html)。备注：内容中代码具有**关联性**。 
+此部分源引自[博客园](https://www.cnblogs.com/epeter/p/5648026.html)。
+
+备注：内容中代码具有**关联性**。 
 
 #### 3.1.1 添加，获取，删除元素
 
