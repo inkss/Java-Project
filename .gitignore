@@ -3,3 +3,6 @@
 
 # 输出目录
 /production/
+
+# Web 项目输出
+/artifacts/
