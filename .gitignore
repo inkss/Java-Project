@@ -6,3 +6,6 @@
 
 # Web 项目输出
 /artifacts/
+
+# 测试文件输出
+/test/
