@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过命令空间找到指定 sql 操作文件-->
+<mapper namespace="UserMapper">
+
+    <!--查询 user 表中的所有数据-->
+    <select id="selectAllUser" resultType="com.inkss.day05_3.pojo.User">
+
+        select * from user;
+
+    </select>
+
+
+</mapper>
+

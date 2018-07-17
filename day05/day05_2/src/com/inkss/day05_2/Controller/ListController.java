@@ -1,6 +1,7 @@
 package com.inkss.day05_2.Controller;
 
 import com.inkss.day05_2.Po.User;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-@org.springframework.stereotype.Controller
+@Controller
 @RequestMapping("list")
 public class ListController {
 
@@ -53,6 +54,8 @@ public class ListController {
 
         System.out.println("待修改的 ID 为：" + id);
 
-        return "success";
+        // redirect 重定向 url 改变
+        // forward 转发 url 不变
+        return "redirect:/user/toList.do"; // 跨域
     }
 }
