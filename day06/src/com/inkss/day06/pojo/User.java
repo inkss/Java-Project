@@ -1,4 +1,4 @@
-package com.inkss.day05_3.pojo;
+package com.inkss.day06.pojo;
 
 import java.util.Date;
 

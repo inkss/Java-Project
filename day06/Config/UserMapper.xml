@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过命令空间找到指定 sql 操作文件-->
+<mapper namespace="UserMapper">
+
+    <!--查询 user 表中的所有数据-->
+    <select id="selectAllUser" resultType="com.inkss.day06.pojo.User">
+        select * from user;
+    </select>
+
+    <!--根据 ID 查询-->
+    <select id="selectById" parameterType="int" resultType="com.inkss.day06.pojo.User">
+        select * from user where id = #{id};
+    </select>
+
+    <!--根据 Name 查询-->
+    <select id="selectByName" parameterType="String" resultType="com.inkss.day06.pojo.User">
+        select * from user where username = #{name};
+    </select>
+
+    <!--根据 Name 模糊查询-->
+    <select id="selectLikeName" parameterType="String" resultType="com.inkss.day06.pojo.User">
+        select * from user where username like '%${value}%';
+    </select>
+
+    <!--插入-->
+    <insert id="insertUser"
+            parameterType="com.inkss.day06.pojo.User">
+        -- 获取插入的 ID
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into user(username,sex,birthday,address)
+        values (#{username},#{sex},#{birthday},#{address});
+    </insert>
+
+    <update id="updateUser" parameterType="com.inkss.day06.pojo.User">
+        update user set username = #{username} , birthday = #{birthday} ,sex = #{sex},address = #{address}
+        where id = #{id};
+    </update>
+
+    <update id="deleteUser" parameterType="com.inkss.day06.pojo.User">
+        delete from user where id = #{id};
+    </update>
+
+    <delete id="deleteByIDList" parameterType="java.util.List">
+        delete from user where id in
+        <foreach collection="list" item="id"
+                 open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
+

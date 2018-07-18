@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inkss.day07_1.mapper.UserMapper">
+
+    <select id="selectLikeName" parameterType="String" resultType="com.inkss.day07_1.pojo.User">
+        select * from user where username like '%${value}%';
+    </select>
+
+    <select id="selectNameAndSex"  parameterType="String" resultType="com.inkss.day07_1.pojo.User">
+        select * from user where username like concat('%',#{0},'%') and sex = #{1};
+        -- 或者 ：select * from user where username like '%${param1}%' and sex = '${param2}';
+        -- 再或者： 传递类进来，然后就可以读属性：
+        -- like '%${username}%' and sex = #{sex}
+    </select>
+
+    <!--动态 sql -->
+    <select id="selectByIdAndName" resultType="com.inkss.day07_1.pojo.User" parameterType="com.inkss.day07_1.pojo.User">
+        select * from user
+        <where>
+            <if test="username != null and username != ''">
+                username like '%${username}'
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

@@ -1,6 +1,6 @@
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--通过命令空间找到指定 sql 操作文件-->
 <mapper namespace="UserMapper">
@@ -12,6 +12,38 @@
 
     </select>
 
+    <select id="selectById" parameterType="int" resultType="com.inkss.day05_3.pojo.User">
+
+        select * from user where id = #{id};
+
+    </select>
+
+    <select id="selectByName" parameterType="String" resultType="com.inkss.day05_3.pojo.User">
+
+        select * from user where username = #{name};
+
+    </select>
+
+    <select id="selectLikeName" parameterType="String" resultType="com.inkss.day05_3.pojo.User">
+
+        select * from user where username like '%${value}%';
+
+    </select>
+
+    <insert id="insertUser" parameterType="com.inkss.day05_3.pojo.User">
+        -- 获取插入的 ID
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert into user(username,sex,birthday,address)
+        values (#{username},#{sex},#{birthday},#{address});
+    </insert>
+
+    <update id="updateUser" parameterType="com.inkss.day05_3.pojo.User">
+        update user set username = #{username} , birthday = #{birthday} ,sex = #{sex},address = #{address}
+        where id = #{id};
+    </update>
 
 </mapper>
 
