@@ -1,10 +1,14 @@
+# MyBatis 实践 - Mapper 与 DAO
+
 ## 一、MyBatis 简介
 
-**MyBatis **前身是 **iBatis** ,是一个基于 Java 的**数据持久层/对象关系映射 (ORM) 框架**. 
-![img](assets/32957777-1531923885074.jpg) 
+**MyBatis **前身是 **iBatis** ,是一个基于 Java 的**数据持久层/对象关系映射 (ORM) 框架**.
+
+![img](assets/32957777-1531923885074.jpg)
+
 MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需花费过多的精力去处理如**注册驱动**、**设置参数**、**创建 Connection/Statement**、**解析结果集**等 JDBC 过程性代码.MyBatis 基于 XML 注解的方式配置 `Statement`,执行 SQL,并将执行结果映射成 Java 对象, 大大降低了数据库开发的难度.
 
-> MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis eliminates almost all of the JDBC code and manual setting of parameters and retrieval of results. MyBatis can use simple XML or Annotations for configuration and map primitives, Map interfaces and Java POJOs (Plain Old Java Objects) to database records. 
+> MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis eliminates almost all of the JDBC code and manual setting of parameters and retrieval of results. MyBatis can use simple XML or Annotations for configuration and map primitives, Map interfaces and Java POJOs (Plain Old Java Objects) to database records.
 >
 > – MyBatis[项目地址](https://github.com/mybatis/mybatis-3)/[在线文档](http://www.mybatis.org/mybatis-3/).
 
@@ -14,7 +18,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
 
 使用 MyBatis 需要在 pom.xml 中添加如下依赖:
 
-```
+```xml
 <dependency>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis</artifactId>
@@ -31,7 +35,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
 
 ### （1）Select
 
-- 配置 mybatis/**mybatis-configuration.xml** 
+- 配置 mybatis/**mybatis-configuration.xml**
   作为 MyBatis 的全局配置文件,其配置了 MyBatis 的运行环境信息(如数据源 /mapper 文件等).
 
 ```xml
@@ -60,7 +64,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
 </configuration>123456789101112131415161718192021222324
 ```
 
-- 书写 UserDAO (mapper 映射) 
+- 书写 UserDAO (mapper 映射)
   最为 MyBatis 核心的部分,配置了操作数据库的 **SQL 语句**:
 
 ```xml
@@ -87,7 +91,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
 
 > mapper 映射文件名有 *UserDAO.xml*/*UserMapper.xml*/*User.xml *等几种形式, 其一般存放在与 mybatis-configuration.xml 同级的 mapper 目录下,由于其主要作用为定义 SQL 语句与映射关系, 因此一般统称为 **mapper 映射文件**.
 
-- 定义 PO 类 
+- 定义 PO 类
   PO 类主要作用为 SQL (输入/输出)映射,通常与数据库表对应:
 
 ```java
@@ -145,7 +149,7 @@ public class User {
 }
 ```
 
-- UserDAO(Java 对象) 
+- UserDAO(Java 对象)
   获得 SqlSession ,执行 SQL 语句, 得到映射结果:
 
 ``` java
@@ -228,7 +232,7 @@ public void insertUser() {
 | 属性               | 描述                                                         |
 | ------------------ | ------------------------------------------------------------ |
 | `keyProperty`      | 指定存储到 DO 中的哪个属性;                                  |
-| `order`            | `selectKey `执行顺序(相对于 `insert` 语句), `AFTER`/`BEFORE`; |
+| `order`            | `selectKey`执行顺序(相对于 `insert` 语句), `AFTER`/`BEFORE`; |
 | `resultType`       | 主键返回类型( DO 中对应属性的类型);                          |
 | `LAST_INSERT_ID()` | MySQL 函数,返回 **auto_increment** 自增列新记录值.           |
 
@@ -302,14 +306,14 @@ public void deleteUserById() {
 ### （6）小结
 
 - `#{}` / `${}`
-  - `#{}`: 表示一个占位符号,实现向 `PreparedStatement` 占位符中设置值( `#{}` 表示一个占位符 `?` ),自动进行 Java 类型到 JDBC 类型的转换(因此 `#{}` 可以有效防止 SQL 注入). `#{}` 可以接收简单类型或 PO 属性值,如果 `parameterType` 传输的是单个简单类型值,`#{} `花括号中可以是 `value` 或其它名称.
-  - `${}`: 表示拼接 SQL 串,通过 `${}` 可将 `parameterType` 内容**拼接**在 SQL 中而*不进行 JDBC 类型转换*, `${}` 可以接收简单类型或 PO 属性值,如果 `parameterType` 传输的是单个简单类型值,`${} `花括号中只能是 `value`. 
+  - `#{}`: 表示一个占位符号,实现向 `PreparedStatement` 占位符中设置值( `#{}` 表示一个占位符 `?` ),自动进行 Java 类型到 JDBC 类型的转换(因此 `#{}` 可以有效防止 SQL 注入). `#{}` 可以接收简单类型或 PO 属性值,如果 `parameterType` 传输的是单个简单类型值,`#{}`花括号中可以是 `value` 或其它名称.
+  - `${}`: 表示拼接 SQL 串,通过 `${}` 可将 `parameterType` 内容**拼接**在 SQL 中而*不进行 JDBC 类型转换*, `${}` 可以接收简单类型或 PO 属性值,如果 `parameterType` 传输的是单个简单类型值,`${}` 花括号中只能是 `value`.
     虽然 `${}` 不能防止 SQL 注入,但有时 `${}` 会非常方便(如 `order by` 排序,需要将列名通过参数传入 SQL,则用 `ORDER BY ${column}` ,使用 `#{}` 则无法实现此功能(详见 [JDBC 基础](http://blog.csdn.net/zjf280441589/article/details/50714873)关于 `PreparedStatement` 的讨论).
 
-- `SqlSession` 
+- `SqlSession`
   提供操作数据库的方法(如: `selectOne`/`selectList`).但 `SqlSession` 是线程不安全的,因此最好将其定义成局部变量使用.
 
-- MyBatis 优点(与 JDBC 相比) 
+- MyBatis 优点(与 JDBC 相比)
 
   - SQL 写在 Java 代码中导致不易维护, 而 MyBatis 将 SQL 写在 mapper 中, XML 与 Java 代码分离.
   - 向 SQL 语句传参繁琐(如: SQL 的 **where 条件**不一,SQL 数据类型与 Java 不同),MyBatis 通过 `parameterType` 自动将 Java 对象映射至 SQL 语句.
@@ -430,8 +434,8 @@ public class MyBatisClient {
 }
 ```
 
-- 原始 DAO 开发中存在的问题: 
-  1) DAO 实现方法体中存在很多过程性代码. 
+- 原始 DAO 开发中存在的问题:
+  1) DAO 实现方法体中存在很多过程性代码.
   2) 调用 `SqlSession` 的方法( `select` / `insert` / `update` )需要指定 *Statement* 的 id ,存在硬编码,不利于代码维护.
 
 ------
@@ -489,7 +493,7 @@ public class MyBatisClient {
 }
 ```
 
-> mapper 映射开发方法需要遵循以下规范: 
+> mapper 映射开发方法需要遵循以下规范:
 >
 > 1. mapper 文件中的 namespace 与 DAO 接口的全限定名相同;
 >
@@ -603,9 +607,9 @@ Integer selectUserCount(String name) throws Exception;
 >
 > 1. 输出单个 PO 对象和输出 PO 列表在 mapper 中定义的 `resultType` 是一样的;
 > 2. 输出单个 PO 对象要保证 SQL 查询结果为单条数据,其内部使用 `selectOne` 方法调用;
-> 3. 输出 PO 列表表示**查询结果可能为多条**,其内部使用 `selectList` 方法调用,接口返回值可用 `List<PO> `/ `Set<PO>` 承载.
+> 3. 输出 PO 列表表示**查询结果可能为多条**,其内部使用 `selectList` 方法调用,接口返回值可用 `List<PO>` / `Set<PO>` 承载.
 
----
+------
 
 #### 2.3 输出 Map
 
@@ -661,6 +665,6 @@ List<Map<String, Object>> selectUserLikeName(String name) throws Exception;
 
 - UserDAO 接口同前.
 
----
+------
 
 文章来源：[MyBatis 实践 - Mapper 与 DAO](https://blog.csdn.net/zjf280441589/article/details/50760236)
