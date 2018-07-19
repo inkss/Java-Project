@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inkss.day07_3.mapper.UserMapper">
+
+    <!--where 条件-->
+    <sql id="whereCondition">
+
+        <where>
+            <if test="user != null and user.sex != ''">
+                and sex = #{user.sex}
+            </if>
+            <if test="user.username != null and user.username != ''">
+                and username like '%${user.username}%';
+            </if>
+        </where>
+        <where>
+            <if test="idList != null">
+                and id in
+                <foreach collection="idList" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+
+    </sql>
+
+    <select id="findUserList" parameterType="com.inkss.day07_3.pojo.UserPojo" resultType="com.inkss.day07_3.pojo.User">
+        select * from user
+
+        <include refid="whereCondition"></include>
+
+    </select>
+
+    <delete id="deleteByIdList" parameterType="com.inkss.day07_3.pojo.UserPojo">
+        delete from user
+
+        <include refid="whereCondition"></include>
+
+    </delete>
+
+    <select id="findCountByName" parameterType="com.inkss.day07_3.pojo.User" resultType="Integer">
+
+        SELECT COUNT(*) FROM user
+        <where>
+
+            <if test="#{username} != null and #{username} != ''">
+                and username like '%${username}%' ;
+            </if>
+
+        </where>
+
+    </select>
+
+</mapper>
+

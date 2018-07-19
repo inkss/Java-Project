@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inkss.day07_3.mapper.OrdersMapper">
+
+
+    <!--查询用户和订单的数据-->
+    <!-- 一对一 -->
+
+    <resultMap id="OrdersAndUserMap" type="com.inkss.day07_3.pojo.OrdersPojo">
+
+        <!--column：数据库中变量名称  property：Java代码中的变量名称 -->
+
+        <id column="id" property="id"></id>
+        <result column="user_id" property="user_id"></result>
+        <result column="number" property="number"></result>
+        <result column="createtime" property="createtime"></result>
+
+        <!--  映射包装类中 user 属性-->
+        <!-- 一对一使用：association -->
+        <association property="user" javaType="com.inkss.day07_3.pojo.User">
+            <result column="username" property="username"></result>
+            <result column="sex" property="sex"></result>
+            <result column="birthday" property="birthday"></result>
+            <result column="address" property="address"></result>
+        </association>
+
+    </resultMap>
+
+    <select id="selectOrdersAndUser" resultMap="OrdersAndUserMap">
+
+        select
+            orders.`id`,
+            orders.`user_id`,
+            orders.`number`,
+            orders.`createtime`,
+            orders.`note`,
+            user.`username`,
+            user.`sex`
+        from mybatis.user, mybatis.orders
+        where user.`id` = orders.`user_id`;
+    </select>
+
+
+    <!-- 一对多查询 -->
+    <resultMap id="OrdersUserDetailMap" type="com.inkss.day07_3.pojo.OrdersPojo">
+        <id column="id" property="id"></id>
+        <result column="user_id" property="user_id"></result>
+        <result column="number" property="number"></result>
+        <result column="createtime" property="createtime"></result>
+        <association property="user" javaType="com.inkss.day07_3.pojo.User">
+            <id column="id" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="sex" property="sex"></result>
+            <result column="birthday" property="birthday"></result>
+            <result column="address" property="address"></result>
+        </association>
+
+        <!-- 集合 -->
+        <collection property="orderDetails" ofType="com.inkss.day07_3.pojo.OrderDetail">
+            <id column="id" property="id"></id>
+            <result column="orders_id" property="orders_id"></result>
+            <result column="items_id" property="items_id"></result>
+            <result column="items_name" property="items_name"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectOrdersAndUserAndDetail" resultMap="OrdersUserDetailMap">
+        select
+            orders.`id`,
+            orders.`user_id`,
+            orders.`number`,
+            orders.`createtime`,
+            orders.`note`,
+            user.`id`,
+            user.`username`,
+            user.`sex`,
+            user.`birthday`,
+            orderdetail.`id`,
+            orderdetail.`orders_id`,
+            orderdetail.`items_id`,
+            orderdetail.`items_num`
+        from mybatis.user, mybatis.orders, mybatis.orderdetail
+        where mybatis.user.`id` = mybatis.orders.`user_id`
+              and mybatis.orders.`id` = mybatis.orderdetail.`orders_id`;
+    </select>
+
+</mapper>
+
