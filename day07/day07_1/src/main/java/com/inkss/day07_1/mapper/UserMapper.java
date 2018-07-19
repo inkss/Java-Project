@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface UserMapper {
 
-    List<User> selectLikeName(String name);
+    void insertUser(User user);
 
-    List<User> selectNameAndSex(String name,String sex);
+    boolean updateUser(User user);
 
-    //  使用动态 sql 多条件查询
-    public List<User> selectByIdAndName(User user);
+    List<User> selectBySexAndName(User user);
 }

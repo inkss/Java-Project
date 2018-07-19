@@ -10,7 +10,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
 
 > MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis eliminates almost all of the JDBC code and manual setting of parameters and retrieval of results. MyBatis can use simple XML or Annotations for configuration and map primitives, Map interfaces and Java POJOs (Plain Old Java Objects) to database records.
 >
-> – MyBatis[项目地址](https://github.com/mybatis/mybatis-3)/[在线文档](http://www.mybatis.org/mybatis-3/).
+> – MyBatis [项目地址](https://github.com/mybatis/mybatis-3) / [在线文档](http://www.mybatis.org/mybatis-3/).
 
 ------
 
@@ -28,7 +28,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
     <version>5.1.36</version>
-</dependency>12345678910
+</dependency>
 ```
 
 ------
@@ -61,7 +61,7 @@ MyBatis 是对 JDBC 的封装,使开发人员只需关注 SQL 本身,而不需�
     <mappers>
         <mapper resource="mybatis/mapper/UserDAO.xml"/>
     </mappers>
-</configuration>123456789101112131415161718192021222324
+</configuration>
 ```
 
 - 书写 UserDAO (mapper 映射)
@@ -226,7 +226,7 @@ public void insertUser() {
         SELECT LAST_INSERT_ID();
     </selectKey>
     INSERT INTO user(name, password) VALUES(#{name}, #{password});
-</insert>123456
+</insert>
 ```
 
 | 属性               | 描述                                                         |
@@ -453,7 +453,7 @@ mapper映射开发方法只需编写 DAO 接口, MyBatis 根据接口定义与 m
     <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.fq.domain.User">
         SELECT * FROM user WHERE id = #{id};
     </select>
-</mapper>1234567
+</mapper>
 ```
 
 > 注意: 此时 `namespace` 必须与 `UserDAO` 接口的全限定名相同.

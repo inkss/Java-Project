@@ -5,6 +5,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -27,35 +28,45 @@ public class UserMapperTest {
     }
 
     @Test
-    public void selectLikeName() {
+    public void insertUser() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
-        List<User> userList = userMapper.selectLikeName("张");
-        System.out.println(userList);
-
+        User user = new User("小黄1223", new Date(), "男", "中国");
+        userMapper.insertUser(user);
+        sqlSession.commit();
+        System.out.println(user.getId()); // 主键值
+        sqlSession.close();
     }
 
     @Test
-    public void selectNameAndSex() {
+    public void updateUser() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
-        List<User> userList = userMapper.selectNameAndSex("小", "男");
-        for (User user : userList)
-            System.out.println(user);
-
+        User user = new User(34, "小黄儿12333", new Date(), "男", "中国");
+        boolean flag = userMapper.updateUser(user);
+        sqlSession.commit();
+        if (flag)
+            System.out.println("成功");
+        else
+            System.out.println("失败");
+        sqlSession.close();
     }
 
     @Test
-    public void selectByIdAndName() {
+    public void selectBySexAndName() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = new User(34,"小黄",new Date(),"","");
-        List<User> userList = userMapper.selectByIdAndName(user);
 
-        for (User user1 : userList)
-            System.out.println(user1);
+        User user = new User();
+        user.setUsername("小");
+        user.setSex("男");
 
+        List<User> userList = userMapper.selectBySexAndName(user);
+
+        for (User u : userList)
+            System.out.println(u);
+        sqlSession.close();
     }
 }
