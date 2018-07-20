@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.List;
 
 public class LoginServiceImpl implements LoginService {
@@ -38,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
         Login checkLogin = loginMapper.queryByName(name);
         sqlSession.close();
 
-        //密码转MD5加密存储
+        //密码转 MD5 加密存储
         String pwd1 = md5.getMD5(pwd);
 
         if (checkLogin == null)
@@ -65,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
             sqlSession = sqlSessionFactory.openSession();
             loginMapper = sqlSession.getMapper(LoginMapper.class);
 
-            //密码转MD5加密存储
+            //密码转 MD5 加密存储
             String pwd = login.getLoginPwd();
             login.setLoginPwd(md5.getMD5(pwd));
 
@@ -99,7 +98,7 @@ public class LoginServiceImpl implements LoginService {
             sqlSession = sqlSessionFactory.openSession();
             loginMapper = sqlSession.getMapper(LoginMapper.class);
 
-            //密码转MD5加密存储
+            //密码转 MD5 加密存储
             String pwd = login.getLoginPwd();
             login.setLoginPwd(md5.getMD5(pwd));
 

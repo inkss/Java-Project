@@ -75,7 +75,7 @@ public class LoginMapperTest {
     @Test
     public void queryList() {
 
-        List<Login> loginList = loginMapper.queryList(0, 1);
+        List<Login> loginList = loginMapper.queryList(1, 5);
         System.out.println(loginList);
     }
 
