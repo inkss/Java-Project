@@ -43,12 +43,6 @@
 
 			//从cookie读取登录用户
 			var loginName = getCookie("loginName");
-			var isLogin = getCookie("isLogin");
-			var loginNickName = getCookie("loginNickName");
-			var loginAdmin = getCookie("loginAdmin");
-
-			if(isLogin == null)
-				setCookie("isLogin", "0"); //表示第一次登录
 
 			Win10.onReady(function() {
 				//设置壁纸
@@ -65,16 +59,9 @@
 
 				//发送一条消息
 				setTimeout(function() {
-					isLogin = getCookie("isLogin");
-					loginAdmin = getCookie("loginAdmin");
-					if(isLogin == 0) {
-						Win10.newMsg('欢迎登录',
-							'欢迎用户"' + loginNickName + '"的登录。');
-						setCookie("isLogin", "1")
-					} else {
-						Win10.newMsg('欢迎回来',
-							'你好' + loginNickName + '，欢迎回来。');
-					}
+                    loginName = getCookie("loginName");
+                    Win10.newMsg('欢迎登录',
+                        '欢迎用户" ' + loginName + ' "的登录。');
 
 				}, 2500);
 

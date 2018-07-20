@@ -7,17 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * 过滤器，拦截所有请求。
- * 仅当session中包含登录成功后的登录名后才放行请求
- */
 @WebFilter(value = "/*", filterName = "CommonFilter") //拦截所有请求
 public class CommonFilter implements Filter {
     public void destroy() {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-
         // 转换为子接口类型
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
@@ -33,30 +28,27 @@ public class CommonFilter implements Filter {
 
         // 因为是全局过滤，所以会对所有请求进行过滤，诸如css、js、png等等
         // 所以应该做到只拦截.html和.jsp请求，对请求地址的末尾进行判断
-        // 修订 servlet加入拦截过滤范围
-        if (url.endsWith(".jsp") || url.endsWith(".html") || url.endsWith("Servlet"))
+        if (url.endsWith(".jsp") || url.endsWith(".html") || url.endsWith(".do") )
             check = true;
 
-        // 判断登录请求的servlet不过滤
-        if (url.endsWith("/hb/QueryLoginNameServlet"))
+        if (url.endsWith("login.do") )
             check = false;
 
         if (!url.equals("/hb") && check) {
             // 判断session中此值是否存在
-            if (session.getAttribute("LoginName") != null) {
-                //System.out.println("---->通过】");
+            if (session.getAttribute("loginName") != null) {
                 chain.doFilter(request, response); //放行
             } else {
-                //System.out.println("---->未通过!】");
                 response.sendRedirect("/hb"); //跳转回根目录
             }
         } else {
             // 非html和jsp请求一律不管
             chain.doFilter(request, response);
         }
+
     }
 
-    public void init(FilterConfig config) {
+    public void init(FilterConfig config) throws ServletException {
 
     }
 

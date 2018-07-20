@@ -56,7 +56,7 @@
 
 <!--脚注-->
 <div class="footer">
-    <p>© 2017
+    <p>© 2018
         <a href="#">HotelBook System</a>
     </p>
 </div>
@@ -90,13 +90,13 @@
                 else if (loginPwd === "")
                     layer.tips("请输入密码", "#loginPwd");
                 else {
-
                     //发出ajax请求，调用后端功能
                     $.ajax({
-                        timeout: 2000,
+                        timeout: 6000,
                         type: "POST",
-                        url: baseUrl + "/QueryLoginName/login.do",
+                        url: baseUrl + "/LoginController/login.do",
                         data: params,
+                        dataType: "JSON",
                         success: function (data) {
                             if (data === '-1')
                                 layer.msg("用户名不存在", {
@@ -111,32 +111,13 @@
                                     icon: 16,
                                     shade: 0.01
                                 });
-
-                                //根据写入的session值得到结果
-                                $.post(baseUrl + '/QueryLoginInfoServlet', function (loginInfo) {
-
-                                    //数据返回样例
-                                    <%--{"loginId":1,"loginName":"root","loginPwd":"toor","loginNickName":"管理员","loginAdmin":0}--%>
-
-                                    //取值方法
-                                    var obj = JSON.parse(loginInfo);
-                                    //alert(obj.loginName);
-                                    //alert(obj.loginPwd);
-                                    //alert(obj.loginNickName);
-                                    //alert(obj.loginAdmin);
-
-                                    //设置cookie
-                                    setCookie("loginName", loginName);
-                                    setCookie("loginNickName", obj.loginNickName);
-                                    setCookie("loginAdmin", obj.loginAdmin);
-                                });
-
+                                setCookie("loginName", loginName);
                                 setTimeout(function () {
                                     location.href = 'MAIN/main.html';
                                 }, 1000); //等待一段时间后跳入
                             }
                         },
-                        error : function (){
+                        error: function () {
                             layer.msg("请求失败", {
                                 anim: 6
                             });
