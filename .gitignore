@@ -9,3 +9,6 @@
 
 # 测试文件输出
 /test/
+
+# Maven 的输出目录
+/hb/target

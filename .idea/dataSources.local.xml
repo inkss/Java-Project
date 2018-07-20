@@ -9,7 +9,7 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-schemas>*:mybatis</introspection-schemas>
+      <introspection-schemas>*:hotelbook,mybatis</introspection-schemas>
     </data-source>
   </component>
 </project>

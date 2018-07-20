@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inkss.hb.login.mapper.LoginMapper">
+
+
+    <!-- insertData 增加单条数据-->
+    <insert id="insertData" parameterType="com.inkss.hb.login.pojo.Login">
+        <selectKey keyProperty="loginId" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into hotelbook.login(loginName, loginPwd, loginNickName, loginAdmin)
+        values (#{loginName},#{loginPwd},#{loginNickName},#{loginAdmin});
+    </insert>
+
+    <!-- deleteData 删除单条数据-->
+    <delete id="deleteData" parameterType="Integer">
+        delete from hotelbook.login
+        where loginId = #{loginId};
+    </delete>
+
+    <!-- updateData 更新 单条数据-->
+    <update id="updateData" parameterType="com.inkss.hb.login.pojo.Login">
+        update hotelbook.login
+        set
+            loginName     = #{loginName},
+            loginPwd      = #{loginPwd},
+            loginNickName = #{loginNickName},
+            loginAdmin    = #{loginAdmin}
+        where
+            loginId = #{loginId};
+    </update>
+
+    <!-- queryDataNum 查询用户个数-->
+    <select id="queryDataNum" resultType="int">
+        select count(*)
+        from hotelbook.login;
+    </select>
+
+    <!-- queryList 范围查询-->
+    <select id="queryList" parameterType="int" resultType="com.inkss.hb.login.pojo.Login">
+        select *
+        from hotelbook.login
+        limit #{0}, #{1};
+    </select>
+
+    <!-- queryByName 依据用户名进行查询-->
+    <select id="queryByName" parameterType="String" resultType="com.inkss.hb.login.pojo.Login">
+        select *
+        from hotelbook.login
+        where loginName = #{loginName};
+    </select>
+</mapper>
