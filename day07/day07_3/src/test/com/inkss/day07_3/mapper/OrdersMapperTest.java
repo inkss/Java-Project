@@ -1,5 +1,6 @@
 package com.inkss.day07_3.mapper;
 
+import com.inkss.day07_3.pojo.Items;
 import com.inkss.day07_3.pojo.OrderDetail;
 import com.inkss.day07_3.pojo.OrdersPojo;
 import org.apache.ibatis.io.Resources;
@@ -37,7 +38,7 @@ public class OrdersMapperTest {
 
         List<OrdersPojo> ordersPojoList = ordersMapper.selectOrdersAndUser();
         for (OrdersPojo ordersPojo : ordersPojoList)
-            System.out.println(ordersPojo +" " + ordersPojo.getUser().toString());
+            System.out.println(ordersPojo + " " + ordersPojo.getUser().toString());
 
     }
 
@@ -45,8 +46,8 @@ public class OrdersMapperTest {
     public void selectOrdersAndUserAndDetail() {
 
         List<OrdersPojo> ordersPojoList = ordersMapper.selectOrdersAndUserAndDetail();
-        for (OrdersPojo ordersPojo :ordersPojoList) {
-            System.out.print(ordersPojo.getUser().toString() + " " +ordersPojo + " " );
+        for (OrdersPojo ordersPojo : ordersPojoList) {
+            System.out.print(ordersPojo.getUser().toString() + " " + ordersPojo + " ");
             for (OrderDetail orderDetail : ordersPojo.getOrderDetails())
                 System.out.print(orderDetail);
             System.out.println();
@@ -54,6 +55,22 @@ public class OrdersMapperTest {
 
     }
 
+    @Test
+    public void selectAll() {
+
+        List<OrdersPojo> ordersPojoList = ordersMapper.selectAll();
+        for (OrdersPojo ordersPojo : ordersPojoList) {
+            System.out.println("\n" + ordersPojo.getUser());
+            System.out.print(ordersPojo);
+            for (OrderDetail orderDetail : ordersPojo.getOrderDetails()) {
+                System.out.print("\n" + orderDetail);
+                for (Items items : ordersPojo.getItems())
+                    System.out.print("\n" + items);
+                System.out.println();
+            }
+        }
+
+    }
 
     @After
     public void after() {

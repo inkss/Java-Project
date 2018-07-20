@@ -11,4 +11,6 @@ public interface OrdersMapper {
 
     // 一对多查询
     List<OrdersPojo> selectOrdersAndUserAndDetail();
+
+    List<OrdersPojo> selectAll();
 }

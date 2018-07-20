@@ -49,21 +49,33 @@
         <result column="user_id" property="user_id"></result>
         <result column="number" property="number"></result>
         <result column="createtime" property="createtime"></result>
+        <result column="note" property="note"></result>
+
         <association property="user" javaType="com.inkss.day07_3.pojo.User">
-            <id column="id" property="id"></id>
+            <id column="userId" property="id"></id>
             <result column="username" property="username"></result>
-            <result column="sex" property="sex"></result>
             <result column="birthday" property="birthday"></result>
+            <result column="sex" property="sex"></result>
             <result column="address" property="address"></result>
         </association>
 
         <!-- 集合 -->
         <collection property="orderDetails" ofType="com.inkss.day07_3.pojo.OrderDetail">
-            <id column="id" property="id"></id>
+            <id column="orderDetailsId" property="id"></id>
             <result column="orders_id" property="orders_id"></result>
             <result column="items_id" property="items_id"></result>
-            <result column="items_name" property="items_name"></result>
+            <result column="items_num" property="items_num"></result>
         </collection>
+
+        <collection property="items" ofType="com.inkss.day07_3.pojo.Items">
+            <id column="itemsId" property="id"></id>
+            <result column="name" property="name"></result>
+            <result column="price" property="price"></result>
+            <result column="detail" property="detail"></result>
+            <result column="pic" property="pic"></result>
+            <result column="createtime" property="createtime"></result>
+        </collection>
+
     </resultMap>
 
     <select id="selectOrdersAndUserAndDetail" resultMap="OrdersUserDetailMap">
@@ -73,11 +85,11 @@
             orders.`number`,
             orders.`createtime`,
             orders.`note`,
-            user.`id`,
+            user.`id` userId,
             user.`username`,
             user.`sex`,
             user.`birthday`,
-            orderdetail.`id`,
+            orderdetail.`id` orderDetailsId,
             orderdetail.`orders_id`,
             orderdetail.`items_id`,
             orderdetail.`items_num`
@@ -85,6 +97,36 @@
         where mybatis.user.`id` = mybatis.orders.`user_id`
               and mybatis.orders.`id` = mybatis.orderdetail.`orders_id`;
     </select>
+
+
+    <!-- 四张表的查询 -->
+    <select id="selectAll" resultMap="OrdersUserDetailMap">
+        select
+            user.`id` userId,
+            user.`username`,
+            user.`birthday`,
+            user.`sex`,
+            user.`address`,
+            orders.`id`,
+            orders.`user_id`,
+            orders.`number`,
+            orders.`createtime`,
+            orders.`note`,
+            orderdetail.`id` orderDetailsId,
+            orderdetail.`orders_id`,
+            orderdetail.`items_id`,
+            orderdetail.`items_num`,
+            items.`id` itemsId,
+            items.`name`,
+            items.`price`,
+            items.`detail`,
+            items.`createtime`
+        from mybatis.user, mybatis.orders, mybatis.orderdetail,mybatis.items
+        where mybatis.user.`id` = mybatis.orders.`user_id`
+              and mybatis.orders.`id` = mybatis.orderdetail.`orders_id`
+              and mybatis.orderdetail.`items_id` = mybatis.items.`id`;
+    </select>
+
 
 </mapper>
 

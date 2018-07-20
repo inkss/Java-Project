@@ -8,6 +8,8 @@ public class OrdersPojo extends Orders {
 
     private List<OrderDetail> orderDetails;
 
+    private List<Items> items;
+
     public User getUser() {
         return user;
     }
@@ -22,5 +24,13 @@ public class OrdersPojo extends Orders {
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Items> items) {
+        this.items = items;
     }
 }
