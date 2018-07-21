@@ -527,6 +527,7 @@ window.Win10 = {
             }
         });
 
+
         /**
          * WIN10-UI v1.1.2.2 桌面舞台支持补丁
          * WIN10-UI v1.1.2.2之后的版本不需要此补丁
@@ -846,15 +847,19 @@ window.Win10 = {
             icon: 3,
             title: Win10.lang('提示', 'Prompt')
         }, function (index) {
-
             $.ajax({
                 timeout: 2000,
                 type: "POST",
                 url: "/hb/LoginController/exitSystem.do"
             });
-            document.body.onbeforeunload = function () {};
-            deleteCookie("loginName");
-            //window.location.href = "/";
+            document.body.onbeforeunload = function () {
+            };
+            //清除所有cookie函数
+            var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+            if (keys) {
+                for (var i = keys.length; i--;)
+                    document.cookie = keys[i] + '=删除;path=/;expires=' + new Date(0).toUTCString()
+            }
             location.reload();
             window.close();
             layer.close(index);

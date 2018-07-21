@@ -81,14 +81,14 @@ public class LoginServiceImpl implements LoginService {
         sqlSession = sqlSessionFactory.openSession();
         loginMapper = sqlSession.getMapper(LoginMapper.class);
         try {
-            loginMapper.deleteData(5);
+            loginMapper.deleteData(loginId);
             sqlSession.commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
-            sqlSession.commit();
+            sqlSession.close();
         }
     }
 

@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
 <html>
 
 <head>
@@ -48,7 +49,7 @@
 </script>
 <script>
 
-    layui.use(['util', 'layer', 'table','upload'], function () {
+    layui.use(['util', 'layer', 'table', 'upload'], function () {
         $(document).ready(function () {
             var table = layui.table,
                 layer = layui.layer,
@@ -57,13 +58,13 @@
 
             upload.render({ //允许上传的文件后缀
                 elem: '#upload'
-                ,url: baseUrl + '/UploadFileServlet'
-                ,accept: 'file' //普通文件
-                ,exts: 'xlsx' //只允许上传excel文件
-                ,before: function(){
+                , url: baseUrl + '/UploadFileServlet'
+                , accept: 'file' //普通文件
+                , exts: 'xlsx' //只允许上传excel文件
+                , before: function () {
                     layer.msg('文件上传中');
                 }
-                ,success: function(res){
+                , success: function (res) {
                     alert(res.msg);
                 }
             });
@@ -72,7 +73,7 @@
             var tableIns = table.render({
                 elem: '#tableID',
                 id: 'tableID',
-                url: baseUrl + '/LoginTableServlet',
+                url: baseUrl + '/LoginController/loginTable.do',
                 cols: [
                     [{
                         field: 'loginId',
@@ -144,65 +145,100 @@
                         maxlength: 18
                     }, function (value, index) {
                         var params = "loginName=" + loginName + "&loginPwd=" + value;
-                        $.post(baseUrl + '/QueryLoginNameServlet', params, function updateCheck(data) {
-                            layer.close(index);
-                            if (data === "0") {
-                                layer.alert('密码不正确！', {
-                                    title: '警告',
-                                    icon: 2,
-                                    anim: 6,
-                                    offset: '220px'
-                                });
-                            } else {
-                                layer.prompt({
-                                    title: '请输入新密码',
-                                    formType: 1,
-                                    offset: '220px',
-                                    maxlength: 18
-                                }, function (value1, index1) {
-                                    var pwd1 = value1;
+
+                        $.ajax({
+                            timeout: 6000,
+                            type: "POST",
+                            url: baseUrl + "/LoginController/login.do",
+                            data: params,
+                            dataType: "JSON",
+                            success: function (data) {
+                                layer.close(index);
+                                if (data === "0") {
+                                    layer.alert('密码不正确！', {
+                                        title: '警告',
+                                        icon: 2,
+                                        anim: 6,
+                                        offset: '220px'
+                                    });
+                                } else {
                                     layer.prompt({
-                                        title: '请再次输入新密码',
+                                        title: '请输入新密码',
                                         formType: 1,
                                         offset: '220px',
                                         maxlength: 18
-                                    }, function (value2, index2) {
-                                        var pwd2 = value2;
-                                        if (pwd2 != pwd1) {
-                                            layer.close(index2);
-                                            layer.alert('两次输入的值不一致！', {
+                                    }, function (value1, index1) {
+                                        var pwd1 = value1;
+                                        if (value1 == value) {
+                                            layer.alert('两次密码一致！', {
                                                 title: '警告',
-                                                icon: 2,
-                                                anim: 6,
+                                                icon: 1,
+                                                anim: 4,
                                                 offset: '220px'
                                             });
                                         } else {
-                                            layer.close(index1);
-                                            layer.close(index2);
-                                            params = "loginName=" + loginName + "&loginPwd=" + value2;
-                                            $.post(baseUrl + '/UpdatePwdServlet', params, function updateCheck(data) {
-                                                if (data === '1') {
-                                                    layer.alert('修改成功！', {
-                                                        title: '成功',
-                                                        icon: 6,
-                                                        anim: 1,
-                                                        offset: '220px'
-                                                    });
-                                                } else {
-                                                    layer.alert('修改失败！', {
-                                                        title: '失败',
+                                            layer.prompt({
+                                                title: '请再次输入新密码',
+                                                formType: 1,
+                                                offset: '220px',
+                                                maxlength: 18
+                                            }, function (value2, index2) {
+                                                var pwd2 = value2;
+                                                if (pwd2 != pwd1) {
+                                                    layer.close(index2);
+                                                    layer.alert('两次输入的值不一致！', {
+                                                        title: '警告',
                                                         icon: 2,
                                                         anim: 6,
                                                         offset: '220px'
+                                                    });
+                                                } else {
+                                                    layer.close(index1);
+                                                    layer.close(index2);
+                                                    params = "loginName=" + loginName + "&loginPwd=" + value2;
+
+                                                    $.ajax({
+                                                        timeout: 6000,
+                                                        type: "POST",
+                                                        url: baseUrl + "/LoginController/updatePwd.do",
+                                                        data: params,
+                                                        dataType: "JSON",
+                                                        success: function (data) {
+                                                            if (data == "1") {
+                                                                layer.alert('修改成功！', {
+                                                                    title: '成功',
+                                                                    icon: 6,
+                                                                    anim: 1,
+                                                                    offset: '220px'
+                                                                });
+                                                            } else {
+                                                                layer.alert('修改失败！', {
+                                                                    title: '失败',
+                                                                    icon: 2,
+                                                                    anim: 6,
+                                                                    offset: '220px'
+                                                                });
+                                                            }
+                                                        }
+                                                        , error: function () {
+                                                            layer.msg("请求失败", {
+                                                                anim: 6
+                                                            });
+                                                        }
                                                     });
                                                 }
                                             });
                                         }
                                     });
+                                }
+                            }
+                            , error: function () {
+                                layer.msg("请求失败", {
+                                    anim: 6
                                 });
-
                             }
                         });
+
                     });
 
                 }
@@ -239,7 +275,7 @@
 
             //导出
             $('#toXlsButton').click(function () {
-                location.href = baseUrl + '/LoginExcelServlet';
+                location.href = baseUrl + '/LoginController/toExcel.do';
                 layer.alert('Excel文件生成完成！', {
                     title: '成功',
                     icon: 6,

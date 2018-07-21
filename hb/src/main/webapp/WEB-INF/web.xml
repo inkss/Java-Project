@@ -5,10 +5,30 @@
          version="4.0">
     <display-name>Archetype Created Web Application</display-name>
 
+
     <error-page>
         <error-code>404</error-code>
         <location>/404.htm</location>
     </error-page>
+
+    <!--编码解析器-->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+
+    </filter>
+
+
+
+    <!--设置拦截规则 根目录下所有请求为 UTF-8-->
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--前端控制器，分发器，拦截服务器请求，并分发给 springmvc-->
     <servlet>
@@ -27,19 +47,4 @@
     </servlet-mapping>
 
 
-    <!--编码解析器-->
-    <filter>
-        <filter-name>characterEncodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-
-    <!--设置拦截规则 根目录下所有请求为 UTF-8-->
-    <filter-mapping>
-        <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 </web-app>

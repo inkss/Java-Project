@@ -37,7 +37,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">确认密码</label>
             <div class="layui-input-inline">
-                <input type="password"  id="pwd2" lay-verify="required|inputPwd" autocomplete="off"
+                <input type="password" id="pwd2" lay-verify="required|inputPwd" autocomplete="off"
                        placeholder="重复你所输入的密码" class="layui-input">
             </div>
         </div>
@@ -96,17 +96,28 @@
                 layer.msg("二次密码验证不一致");
             } else {
 
-                $.post(baseUrl + '/InsertLoginServlet', JSON.stringify(data.field), function (code) {
-                    if (code === 1) {
-                        layer.alert('注册成功！', {
-                            title: '成功',
-                            icon: 6,
-                            anim: 5
-                        });
-                    } else {
-                        layer.alert('注册失败！', {
-                            title: '异常',
-                            icon: 5,
+                $.ajax({
+                    timeout: 6000,
+                    type: "POST",
+                    url: baseUrl + "/LoginController/insertLogin.do",
+                    data: JSON.stringify(data.field),
+                    success: function (data) {
+                        if (data == "ok") {
+                            layer.msg("插入成功", {
+                                anim: 4
+                            });
+                        } else if (data == "1") {
+                            layer.msg("已存在的用户名", {
+                                anim: 6
+                            });
+                        } else {
+                            layer.msg("插入失败", {
+                                anim: 6
+                            });
+                        }
+                    },
+                    error: function () {
+                        layer.msg("请求失败", {
                             anim: 6
                         });
                     }

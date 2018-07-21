@@ -112,8 +112,13 @@
                                     shade: 0.01
                                 });
                                 setCookie("loginName", loginName);
+
+                                // 这样写没错，但是在这儿肯定取不到
+                                //var session = "<%=session.getAttribute("loginName")%>";
+                                //alert(session);
+
                                 setTimeout(function () {
-                                    location.href = 'MAIN/main.html';
+                                    location.href = 'MAIN/main.jsp';
                                 }, 1000); //等待一段时间后跳入
                             }
                         },

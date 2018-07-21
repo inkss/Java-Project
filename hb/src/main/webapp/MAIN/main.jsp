@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 
@@ -43,6 +44,8 @@
 
 			//从cookie读取登录用户
 			var loginName = getCookie("loginName");
+            var loginNickName = "<%=session.getAttribute("loginNickName")%>";
+            setCookie("loginNickName",loginNickName);
 
 			Win10.onReady(function() {
 				//设置壁纸
@@ -61,7 +64,7 @@
 				setTimeout(function() {
                     loginName = getCookie("loginName");
                     Win10.newMsg('欢迎登录',
-                        '欢迎用户" ' + loginName + ' "的登录。');
+                        '欢迎用户 " ' + loginNickName + ' " 的登录。');
 
 				}, 2500);
 
