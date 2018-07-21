@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inkss.hb.logInfo.mapper.LogInfoMapper">
+
+    <!-- insertData 增加单条数据-->
+    <insert id="insertData" parameterType="com.inkss.hb.login.pojo.Login">
+        <selectKey keyProperty="logId" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into hotelbook.loginfo(logName, loginId, loginName, logDate)
+        VALUES (#{logName},#{loginId},#{loginName},#{logDate});
+    </insert>
+
+    <!-- deleteData 删除单条数据-->
+    <delete id="deleteData" parameterType="Integer">
+        delete from hotelbook.loginfo
+        where logId = #{logId};
+    </delete>
+
+    <!-- queryDataNum 查询用户个数-->
+    <select id="queryDataNum" resultType="int">
+        select count(*)
+        from hotelbook.loginfo;
+    </select>
+
+    <!-- queryList 范围查询-->
+    <select id="queryList" parameterType="int" resultType="com.inkss.hb.logInfo.pojo.LogInfo">
+        select *
+        from hotelbook.loginfo
+        limit #{0}, #{1};
+    </select>
+</mapper>

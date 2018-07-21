@@ -49,12 +49,9 @@
 
             //方法级渲染
             var tableIns = table.render({
-                elem: '#tableLogInfo' //绑定元素-->对应页面table的ID
-                ,
-                id: 'tableLogInfo' //表格容器索引
-                ,
-                url: baseUrl + '/LogInfoServlet' //数据接口
-                ,
+                elem: '#tableLogInfo', //绑定元素-->对应页面table的ID
+                id: 'tableLogInfo', //表格容器索引
+                url: baseUrl + '/LogInfoController/logInfoTable.do',//数据接口
                 limit: 30,
                 cols: [
                     [ //表头
@@ -115,7 +112,7 @@
                     }, function () {
                         tableIns.reload({
                             where: {
-                                make: 1,
+                                make: 4,
                                 logId: logId
                             }
                         });
@@ -123,12 +120,6 @@
                             offset: '250px',
                             icon: 1
                         });
-                        // tableIns.reload({
-                        //     where: {
-                        //         make: 0,
-                        //         page: 1
-                        //     }
-                        // });
                     }, function () {
                         layer.msg('删除操作已取消', {
                             offset: '250px'
@@ -149,7 +140,7 @@
 
             //导出
             $('#toXls').click(function () {
-                location.href = baseUrl + '/LogInfoExcelServlet';
+                location.href = baseUrl + '/LogInfoController/toExcel.do';
                 layer.alert('Excel文件生成完成！', {
                     title: '成功',
                     icon: 6,

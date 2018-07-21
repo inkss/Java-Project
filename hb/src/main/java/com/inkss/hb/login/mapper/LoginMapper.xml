@@ -19,7 +19,7 @@
         where loginId = #{loginId};
     </delete>
 
-    <!-- updateData 更新 单条数据-->
+    <!-- updateData 更新单条数据-->
     <update id="updateData" parameterType="com.inkss.hb.login.pojo.Login">
         update hotelbook.login
         set
@@ -31,7 +31,7 @@
             loginId = #{loginId};
     </update>
 
-    <!-- queryDataNum 查询用户个数-->
+    <!-- queryDataNum 查询个数-->
     <select id="queryDataNum" resultType="int">
         select count(*)
         from hotelbook.login;

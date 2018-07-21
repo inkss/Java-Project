@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inkss.hb.roomtype.mapper.RoomTypeMapper">
+
+    <!-- insertData 增加单条数据-->
+    <insert id="insertData" parameterType="com.inkss.hb.roomtype.pojo.RoomType">
+        insert into hotelbook.roomtype(typeId, typeName, price, splicPrice, exceedance, isSplice)
+        values (#{typeId},#{typeName},#{price},#{splicPrice},#{exceedance},#{isSplice});
+    </insert>
+
+    <!-- deleteData 删除单条数据-->
+    <delete id="deleteData" parameterType="String">
+        delete from hotelbook.roomtype
+        where typeId = #{typeId};
+    </delete>
+
+    <!-- updateData 更新单条数据-->
+    <update id="updateData" parameterType="com.inkss.hb.roomtype.pojo.RoomType">
+        update hotelbook.roomtype
+        set
+            typeName   = #{typeName},
+            price      = #{price},
+            splicPrice = #{splicPrice},
+            exceedance = #{exceedance},
+            isSplice   = #{isSplice}
+        where
+            typeId = #{typeId};
+    </update>
+
+    <!-- queryDataNum 查询个数-->
+    <select id="queryDataNum" resultType="int">
+        select count(*)
+        from hotelbook.roomtype;
+    </select>
+
+    <!-- queryList 范围查询-->
+    <select id="queryList" parameterType="Integer" resultType="com.inkss.hb.roomtype.pojo.RoomType">
+        select *
+        from hotelbook.roomtype
+        limit #{0}, #{1};
+    </select>
+
+    <!-- queryByName 依据 ID 进行查询-->
+    <select id="queryById" parameterType="String" resultType="com.inkss.hb.roomtype.pojo.RoomType">
+        select *
+        from hotelbook.roomtype
+        where typeId = #{typeId};
+    </select>
+
+    <!-- queryByName 依据名称进行模糊查询-->
+    <select id="queryByName" parameterType="String" resultType="com.inkss.hb.roomtype.pojo.RoomType">
+        select *
+        from hotelbook.roomtype
+        where typeName like '%${Name}%';
+    </select>
+
+</mapper>

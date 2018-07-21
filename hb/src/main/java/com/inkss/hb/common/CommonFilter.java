@@ -25,10 +25,11 @@ public class CommonFilter implements Filter {
         // 获得用户请求的URL
         String url = request.getRequestURI();
         boolean check = false;
-
+        System.out.println(url);
         // 因为是全局过滤，所以会对所有请求进行过滤，诸如css、js、png等等
         // 所以应该做到只拦截.html和.jsp请求，对请求地址的末尾进行判断
-        if (url.endsWith(".jsp") || url.endsWith(".html") || url.endsWith(".do") )
+        if (url.endsWith(".jsp") || url.endsWith(".html") || url.endsWith(".do")
+                || url.endsWith("win10.js") || url.equals("/hb/MAIN/main.jsp"))
             check = true;
 
         if (url.endsWith("login.do") )

@@ -21,6 +21,8 @@
 
     <mappers>
         <package name="com.inkss.hb.login.mapper" ></package>
+        <package name="com.inkss.hb.logInfo.mapper"></package>
+        <package name="com.inkss.hb.roomtype.mapper"></package>
     </mappers>
 
 </configuration>

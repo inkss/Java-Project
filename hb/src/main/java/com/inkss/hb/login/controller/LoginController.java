@@ -3,6 +3,9 @@ package com.inkss.hb.login.controller;
 import com.google.gson.Gson;
 import com.inkss.hb.common.ExportExcel;
 import com.inkss.hb.common.PojotoGson;
+import com.inkss.hb.logInfo.pojo.LogInfo;
+import com.inkss.hb.logInfo.service.LogInfoService;
+import com.inkss.hb.logInfo.service.LogInfoServiceImpl;
 import com.inkss.hb.login.pojo.Login;
 import com.inkss.hb.login.service.LoginService;
 import com.inkss.hb.login.service.LoginServiceImpl;
@@ -143,13 +146,12 @@ public class LoginController {
             session.setAttribute("loginId", login.getLoginId());
             session.setAttribute("loginNickName", login.getLoginNickName());
             session.setAttribute("loginAdmin", login.getLoginAdmin());
+
+            //写入登录记录
+            LogInfo logInfo = new LogInfo("登录", login.getLoginId(), login.getLoginName());
+            LogInfoService logInfoService = new LogInfoServiceImpl();
+            logInfoService.insertLogInfo(logInfo);
         }
-
-        //写入登录记录
-        //LogInfo logInfo = new LogInfo("登录", login.getLoginId(), login.getLoginName());
-        //LogInfoService logInfoService = new LogInfoServiceImpl();
-        //logInfoService.insertLogInfo(logInfo);
-
         Gson gson = new Gson();
 
         return gson.toJson(data);
@@ -164,11 +166,19 @@ public class LoginController {
     @RequestMapping("exitSystem.do")
     @ResponseBody
     public String toList(HttpSession session) {
+        int loginId = (int) session.getAttribute("loginId");
+        String loginName = (String) session.getAttribute("loginName");
+
+        //写入退出记录
+        LogInfo logInfo = new LogInfo("退出", loginId, loginName);
+        LogInfoService logInfoService = new LogInfoServiceImpl();
+        logInfoService.insertLogInfo(logInfo);
         session.removeAttribute("loginId");
         session.removeAttribute("loginName");
         session.removeAttribute("loginNickPwd");
         session.removeAttribute("loginAdmin");
         session.invalidate();
+
         return "";
     }
 

@@ -78,28 +78,33 @@
 
 				//监听提交
 				form.on('submit(insertRome)', function(data) {
-					$.post(baseUrl + '/InsertRoomTypeServlet', JSON.stringify(data.field), function(code) {
-						if(code === 1) {
-							layer.alert('插入成功！', {
-								title: '成功',
-								icon: 6,
-								anim: 5
-							});
-						} else if(code === 0) {
-							layer.alert('已存在同名项！', {
-								title: '重复',
-								icon: 4,
-								anim: 6
-							});
-						} else {
-							layer.alert('插入失败！', {
-								title: '异常',
-								icon: 6,
-								anim: 6
-							});
-						}
-					});
-					return false;
+                    $.ajax({
+                        timeout: 6000,
+                        type: "POST",
+                        url: baseUrl + "/RoomTypeController/insertRoomType.do",
+                        data: JSON.stringify(data.field),
+                        success: function (data) {
+                            if (data == "ok") {
+                                layer.msg("插入成功", {
+                                    anim: 4
+                                });
+                            } else if (data == "1") {
+                                layer.msg("已存在的用户名", {
+                                    anim: 6
+                                });
+                            } else {
+                                layer.msg("插入失败", {
+                                    anim: 6
+                                });
+                            }
+                        },
+                        error: function () {
+                            layer.msg("请求失败", {
+                                anim: 6
+                            });
+                        }
+                    });
+                    return false;
 				});
 			});
 		</script>
