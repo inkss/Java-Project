@@ -211,7 +211,7 @@ public void insertUser() {
         session.insert("namespace.insertUser", user);
         session.commit();
     }
-}12345678910
+}
 ```
 
 ------
